@@ -1,0 +1,175 @@
+{
+  "inventory": {
+    "notes": "Trophy inventory is uncapped — every slain monster adds a permanent passive bonus."
+  },
+  "trophies": [
+    {
+      "id": "Saytr",
+      "name": "Satyrs & Woodland Imps Trophy",
+      "rarity": "common",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Karkinos",
+      "name": "Karkinos (Giant Crab) Trophy",
+      "rarity": "common",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Harpies",
+      "name": "Harpies Trophy",
+      "rarity": "common",
+      "bonus_type": "farm_production",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Sirens",
+      "name": "Sirens Trophy",
+      "rarity": "common",
+      "bonus_type": "creature_chance",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Calydonin_Boar",
+      "name": "Calydonian Boar Trophy",
+      "rarity": "common",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Stymphalian_Birds",
+      "name": "Stymphalian Birds Trophy",
+      "rarity": "common",
+      "bonus_type": "farm_production",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Sphinx",
+      "name": "The Sphinx Trophy",
+      "rarity": "common",
+      "bonus_type": "relic_chance",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Minotaur",
+      "name": "Minotaur Trophy",
+      "rarity": "common",
+      "bonus_type": "strength_rewards",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Polyphemus",
+      "name": "Polyphemus (Cyclops) Trophy",
+      "rarity": "common",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Orthrus",
+      "name": "Orthrus (Two-Headed Dog) Trophy",
+      "rarity": "common",
+      "bonus_type": "creature_chance",
+      "bonus_value": 0.03
+    },
+    {
+      "id": "Medusa",
+      "name": "Medusa Trophy",
+      "rarity": "rare",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.07
+    },
+    {
+      "id": "Mares_of_Diomedes",
+      "name": "Mares of Diomedes Trophy",
+      "rarity": "rare",
+      "bonus_type": "strength_rewards",
+      "bonus_value": 0.07
+    },
+    {
+      "id": "Nemean_Lion",
+      "name": "Nemean Lion Trophy",
+      "rarity": "rare",
+      "bonus_type": "campaign_strength",
+      "bonus_value": 0.07
+    },
+    {
+      "id": "Colchian_Dragon",
+      "name": "Colchian Dragon Trophy",
+      "rarity": "rare",
+      "bonus_type": "relic_chance",
+      "bonus_value": 0.07
+    },
+    {
+      "id": "Lernaean_Hydra",
+      "name": "Lernaean Hydra Trophy",
+      "rarity": "rare",
+      "bonus_type": "farm_production",
+      "bonus_value": 0.07
+    },
+    {
+      "id": "Geryon",
+      "name": "Geryon Trophy",
+      "rarity": "epic",
+      "bonus_type": "campaign_strength",
+      "bonus_value": 0.10
+    },
+    {
+      "id": "Chimera",
+      "name": "Chimera Trophy",
+      "rarity": "epic",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.10
+    },
+    {
+      "id": "Talos",
+      "name": "Talos Trophy",
+      "rarity": "epic",
+      "bonus_type": "farm_production",
+      "bonus_value": 0.10
+    },
+    {
+      "id": "Cerberus",
+      "name": "Cerberus Trophy",
+      "rarity": "epic",
+      "bonus_type": "creature_chance",
+      "bonus_value": 0.10
+    },
+    {
+      "id": "Gigantes",
+      "name": "Gigantes Trophy",
+      "rarity": "epic",
+      "bonus_type": "strength_rewards",
+      "bonus_value": 0.10
+    },
+    {
+      "id": "Scylla_&_Charybdis",
+      "name": "Scylla & Charybdis Trophy",
+      "rarity": "legendary",
+      "bonus_type": "relic_chance",
+      "bonus_value": 0.15
+    },
+    {
+      "id": "Echidna",
+      "name": "Echidna Trophy",
+      "rarity": "legendary",
+      "bonus_type": "creature_chance",
+      "bonus_value": 0.15
+    },
+    {
+      "id": "Hecatoncheires",
+      "name": "Hecatoncheires Trophy",
+      "rarity": "legendary",
+      "bonus_type": "campaign_strength",
+      "bonus_value": 0.15
+    },
+    {
+      "id": "Typhon",
+      "name": "Typhon Trophy",
+      "rarity": "legendary",
+      "bonus_type": "drachmae_gain",
+      "bonus_value": 0.15
+    }
+  ]
+}

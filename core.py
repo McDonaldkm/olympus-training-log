@@ -955,6 +955,7 @@ def _award_monster_badge(state: dict) -> None:
         "date":       str(dt.date.today()),
         "name":       name + (" ★" if gilded else ""),
         "type":       "monster",
+        "monster_id": folder,
         "image_path": img_path,
     })
 

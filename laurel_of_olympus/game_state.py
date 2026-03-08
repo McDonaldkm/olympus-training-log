@@ -108,6 +108,9 @@ class PlayerState:
     army_limit: int = 10
     campaigns_won: int = 0
 
+    # ── Monster Trophies (awarded on 6-session microcycle completion) ─────────
+    trophies: List[str] = field(default_factory=list)    # monster IDs (duplicates allowed)
+
     # ── Version for future migrations ────────────────────────────────────────
     version: int = 1
 

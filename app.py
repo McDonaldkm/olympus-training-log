@@ -6,7 +6,7 @@ from laurel_of_olympus import game_state as gs
 from laurel_of_olympus import workout_engine, farm_engine, event_engine
 from laurel_of_olympus import oracle_engine, title_engine
 from laurel_of_olympus import creature_engine, relic_engine, buff_engine
-from laurel_of_olympus import army_engine
+from laurel_of_olympus import army_engine, trophy_engine
 
 BASE   = Path(__file__).parent
 DATA   = BASE / "data.json"
@@ -133,6 +133,29 @@ async def select_track(req: Request):
     _save(state)
     return {"status": "ok", "msg": msg, "state": state}
 
+def _maybe_award_trophy(kb_state: dict) -> dict | None:
+    """
+    If the kettlebell microcycle just completed (badge_given is True and the
+    newest badge is a monster badge), award the corresponding trophy to the
+    estate and return the enriched trophy dict; otherwise return None.
+    """
+    mc = kb_state.get("microcycle", {})
+    if not mc.get("badge_given"):
+        return None
+    # Find the newest monster badge
+    badges = kb_state.get("badges", [])
+    for badge in reversed(badges):
+        if badge.get("type") == "monster":
+            monster_id = badge.get("monster_id")
+            if monster_id:
+                estate = gs.load(ESTATE_SAVE)
+                trophy = trophy_engine.award_trophy(estate, monster_id)
+                gs.save(estate, ESTATE_SAVE)
+                return trophy
+            break
+    return None
+
+
 @app.post("/api/workout/recommended")
 async def log_recommended(req: Request):
     weights_lbs = None
@@ -142,9 +165,13 @@ async def log_recommended(req: Request):
     except Exception:
         pass   # body may be absent or non-JSON — that's fine
     state = _load()
+    was_badge_given = state["microcycle"].get("badge_given", False)
     msg   = core.log_rec(state, weights_lbs=weights_lbs)
     _save(state)
-    return {"status": "ok", "msg": msg, "state": state}
+    trophy = None
+    if not was_badge_given:
+        trophy = _maybe_award_trophy(state)
+    return {"status": "ok", "msg": msg, "state": state, "trophy": trophy}
 
 @app.post("/api/workout/custom")
 async def log_custom(req: Request):
@@ -153,9 +180,13 @@ async def log_custom(req: Request):
     if not text:
         raise HTTPException(400, "Empty workout description")
     state = _load()
+    was_badge_given = state["microcycle"].get("badge_given", False)
     msg   = core.log_custom(state, text)
     _save(state)
-    return {"status": "ok", "msg": msg, "state": state}
+    trophy = None
+    if not was_badge_given:
+        trophy = _maybe_award_trophy(state)
+    return {"status": "ok", "msg": msg, "state": state, "trophy": trophy}
 
 @app.post("/api/ruck")
 async def log_ruck(req: Request):
@@ -271,7 +302,7 @@ async def estate_simulate_workout(req: Request):
         events.append(f"  🏅 Title unlocked: {tid.replace('_', ' ').title()}")
 
     # ── Creature encounter (outdoor workouts only, 5% base) ──────────────────
-    encounter_chance = buff_engine.effective_event_chance(buffs, 0.05)
+    encounter_chance = buff_engine.effective_creature_chance(buffs, 0.05)
     creature_encounter = creature_engine.maybe_creature_encounter(
         workout_type, chance=encounter_chance
     )
@@ -398,6 +429,26 @@ async def remove_relic(req: Request):
         raise HTTPException(400, msg)
     gs.save(state, ESTATE_SAVE)
     return {"status": "ok", "msg": msg, "state": state.to_dict()}
+
+# ── Trophy endpoints ────────────────────────────────────────────────────────
+
+@app.get("/api/estate/trophies")
+def get_trophies():
+    """Return trophy inventory, all trophy definitions, and stacked buff totals."""
+    state = gs.load(ESTATE_SAVE)
+    t_buffs = trophy_engine.get_trophy_buffs(state)
+    buff_labels = {
+        btype: trophy_engine.describe_buff(btype, bval)
+        for btype, bval in t_buffs.items()
+    }
+    return {
+        "inventory":    trophy_engine.get_trophy_inventory(state),
+        "trophy_ids":   state.trophies,
+        "all_trophies": trophy_engine.get_all_trophies(),
+        "buffs":        t_buffs,
+        "buff_labels":  buff_labels,
+    }
+
 
 # ── Army / Barracks endpoints ───────────────────────────────────────────────────
 

@@ -42,7 +42,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from laurel_of_olympus.game_state import PlayerState
-from laurel_of_olympus import creature_engine, relic_engine
+from laurel_of_olympus import creature_engine, relic_engine, buff_engine
 
 # ---------------------------------------------------------------------------
 # Load data files once at import time
@@ -310,13 +310,15 @@ def launch_campaign(
         result["campaigns_won"] = state.campaigns_won
 
         # ── Relic reward ─────────────────────────────────────────────────────
-        if random.random() < region["relic_chance"]:
+        relic_chance = buff_engine.effective_relic_chance(buffs, region["relic_chance"])
+        if random.random() < relic_chance:
             relic = relic_engine.roll_relic_reward()
             if relic:
                 result["relic_reward"] = relic
 
         # ── Creature reward ──────────────────────────────────────────────────
-        if random.random() < region["creature_chance"]:
+        creature_chance = buff_engine.effective_creature_chance(buffs, region["creature_chance"])
+        if random.random() < creature_chance:
             creature = creature_engine.maybe_creature_encounter(
                 "walking", chance=1.0  # guaranteed encounter; rarity rolled inside
             )
